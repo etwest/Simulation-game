@@ -18,8 +18,8 @@ public class CameraMovement : MonoBehaviour
     public float Move_Delta;
     public float Zoom_Delta;
 
-    private float max_camera_scale = 10;
-    private float min_camera_scale = 1;
+    private float max_camera_scale = 20;
+    private float min_camera_scale = 2;
 
     private float scale_orig = 0f;
     private float moveBy;

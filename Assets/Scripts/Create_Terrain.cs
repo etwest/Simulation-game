@@ -34,6 +34,7 @@ public class Create_Terrain : MonoBehaviour {
 
     public CameraMovement cameraMovement;
     public Object_Manager objectManager;
+    public GameObject Outline;
 
     private float world_height_half;
     private float world_width_half;
@@ -41,8 +42,11 @@ public class Create_Terrain : MonoBehaviour {
     // the size of the tiles.
     // r is the length from middle to top
     // R is length from middle to side
-    public readonly float r = 0.26f;
-    public readonly float R = 0.30f;
+    // this is a consequence of the number of the pixels
+    // which make up the tile sprites and the scale of the tiles
+    public static readonly float tile_scale = .5f;
+    public static readonly float r = 0.26f * tile_scale;
+    public static readonly float R = 0.30f * tile_scale;
 
     // the size of the world in tiles
     //      |
@@ -62,8 +66,8 @@ public class Create_Terrain : MonoBehaviour {
     //  x x x
     // This is height 1, width 6
 
-    public int height = 30;
-    public int width  = 50;
+    public int height = 60;
+    public int width  = 100;
     public Tile[] dirt_tiles;
     public Tile[] rock_tiles;
     public Tile[] desert_tiles;
@@ -74,6 +78,8 @@ public class Create_Terrain : MonoBehaviour {
     // All the work to create the terrain will be
     // completed within this function once.
     public void createTerrain() {
+        // setup the outline
+        Outline.transform.localScale = new Vector3(tile_scale, tile_scale, 1);
 
         // setup terrain lists
         List<Tile> dirt_list   = new List<Tile>();
@@ -82,8 +88,8 @@ public class Create_Terrain : MonoBehaviour {
         List<Tile> water_list  = new List<Tile>();
 
         // ensure that the world width and height are at least 6 and 4
-        height = (height < 4) ? 4 : height;
-        width  = (width < 6) ? 6 : width;
+        height = (height < 8) ? 8 : height;
+        width  = (width < 12) ? 12 : width;
         // calculate the bounds of the world
 
         // calculation for width is fairly complicated
@@ -176,7 +182,7 @@ public class Create_Terrain : MonoBehaviour {
         }
 
         // TODO: scale value be based on width/height?
-        float scale = .08f;
+        float scale = .04f; // this scale determines how spread out the terrain is
         Noise.Seed = seed;
         float[,] terrain_map = Noise.Calc2D(width, height, scale);
         Noise.Seed = seed - 10;
@@ -192,14 +198,21 @@ public class Create_Terrain : MonoBehaviour {
                 string name = string.Format("Tile_{0}-{1}", row, col);
                 current = new GameObject(name);
                 current.transform.position = new Vector3(x, y, 0);
+                current.transform.localScale = new Vector3(tile_scale, tile_scale, 1);
                 SpriteRenderer sr = current.AddComponent<SpriteRenderer>();
                 sr.sortingLayerName = "Terrain";
+                Update_Outline updateOutline = current.AddComponent<Update_Outline>();
+                
 
                 // Set up the tile
                 Tile cur_tile      = tiles_arr[row, col];
                 cur_tile.obj       = current;
                 cur_tile.i_and_adj = new Tile[7] { cur_tile, cur_tile.N, cur_tile.NE,
                     cur_tile.NW, cur_tile.S, cur_tile.SE, cur_tile.SW };
+
+                // set up outline updater
+                updateOutline.tile = cur_tile;
+                updateOutline.outline = Outline;
 
                 // if the tile is a border don't give it a sprite at all
                 // and give it a the border type
@@ -230,14 +243,14 @@ public class Create_Terrain : MonoBehaviour {
                                         dirt_list.Add(cur_tile);
                                         sr.sprite = Dirt_Tile1;
                                         cur_tile.type = Terrain.Dirt;
-                                        cur_tile.plant_points = (int) (40 * weather_noise / 200);
+                                        cur_tile.plant_points = (int) (25 * weather_noise / 200);
                                     }
                                     else {
                                         // desert tile
                                         desert_list.Add(cur_tile);
                                         sr.sprite = Desert_Tile1;
                                         cur_tile.type = Terrain.Desert;
-                                        cur_tile.plant_points = (int) (5 * weather_noise / (256 * .25));
+                                        cur_tile.plant_points = (int) (4 * weather_noise / (256 * .25));
                                     }
                                     break;
                                 case Terrain.Water:
@@ -249,7 +262,7 @@ public class Create_Terrain : MonoBehaviour {
                                     rock_list.Add(cur_tile);
                                     sr.sprite = Rock_Tile1;
                                     cur_tile.type = Terrain.Rock;
-                                    cur_tile.plant_points = (int) (15 * weather_noise / 256);
+                                    cur_tile.plant_points = (int) (10 * weather_noise / 256);
                                     break;
                                 default:
                                     Debug.Log("Failed to assign a terrain!!");
