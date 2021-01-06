@@ -1,5 +1,5 @@
 ﻿#define PRINT_LAND
-#undef PRINT_LAND
+//#undef PRINT_LAND
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +34,6 @@ public class Create_Terrain : MonoBehaviour {
 
     public CameraMovement cameraMovement;
     public Object_Manager objectManager;
-    public GameObject Outline;
 
     private float world_height_half;
     private float world_width_half;
@@ -66,8 +65,8 @@ public class Create_Terrain : MonoBehaviour {
     //  x x x
     // This is height 1, width 6
 
-    public int height = 60;
-    public int width  = 100;
+    public int height;
+    public int width;
     public Tile[] dirt_tiles;
     public Tile[] rock_tiles;
     public Tile[] desert_tiles;
@@ -78,9 +77,8 @@ public class Create_Terrain : MonoBehaviour {
     // All the work to create the terrain will be
     // completed within this function once.
     public void createTerrain() {
-        // setup the outline
-        Outline.transform.localScale = new Vector3(tile_scale, tile_scale, 1);
-
+        Tile.r = r;
+        Tile.R = R;
         // setup terrain lists
         List<Tile> dirt_list   = new List<Tile>();
         List<Tile> rock_list   = new List<Tile>();
@@ -141,9 +139,9 @@ public class Create_Terrain : MonoBehaviour {
         // we also add additional tiles which are our border around
         // the world. Nothing grows on these tiles and no one can move
         // there
-        Tile[,] tiles_arr = new Tile[height + 2, width + 2];
-        for (int row = 0; row < height + 2; row++) {
-            for (int col = 0; col < width + 2; col++) {
+        Tile[,] tiles_arr = new Tile[height, width];
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
                 tiles_arr[row, col] = new Tile();
                 Tile cur = tiles_arr[row, col];
 
@@ -201,7 +199,6 @@ public class Create_Terrain : MonoBehaviour {
                 current.transform.localScale = new Vector3(tile_scale, tile_scale, 1);
                 SpriteRenderer sr = current.AddComponent<SpriteRenderer>();
                 sr.sortingLayerName = "Terrain";
-                Update_Outline updateOutline = current.AddComponent<Update_Outline>();
                 
 
                 // Set up the tile
@@ -209,10 +206,6 @@ public class Create_Terrain : MonoBehaviour {
                 cur_tile.obj       = current;
                 cur_tile.i_and_adj = new Tile[7] { cur_tile, cur_tile.N, cur_tile.NE,
                     cur_tile.NW, cur_tile.S, cur_tile.SE, cur_tile.SW };
-
-                // set up outline updater
-                updateOutline.tile = cur_tile;
-                updateOutline.outline = Outline;
 
                 // if the tile is a border don't give it a sprite at all
                 // and give it a the border type
@@ -294,6 +287,9 @@ public class Create_Terrain : MonoBehaviour {
             y = start_y + (2 * r) - pixel;
             start_y = y;
         }
+
+        // Set the static Tile array to the arrangement we constructed
+        Tile.tiles_array = tiles_arr;
 
 #if PRINT_LAND
         for (int row = 1; row < height - 1; row++) {

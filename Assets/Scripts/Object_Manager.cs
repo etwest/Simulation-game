@@ -9,6 +9,8 @@ public class Object_Manager : MonoBehaviour {
     public Sprite grass;
     public Sprite tree;
     public Sprite bunny;
+    public GameObject Tile_Outline;
+    public Camera GameCamera;
 
     // counts of initial objects
     public int initial_grass = 100;
@@ -52,6 +54,7 @@ public class Object_Manager : MonoBehaviour {
     private Tile[] desert_tiles;
 
     private void Start() {
+        Tile_Outline.transform.localScale = new Vector3(Create_Terrain.tile_scale, Create_Terrain.tile_scale, 1);
         create_terrain.createTerrain();
         dirt_tiles = create_terrain.dirt_tiles;
         rock_tiles = create_terrain.rock_tiles;
@@ -199,6 +202,21 @@ public class Object_Manager : MonoBehaviour {
 
     // Update the objects to reproduce, move, etc.
     void Update() {
+        // update Tile outline position
+        // Try to make this as quick a process as possible
+        Vector3 screen_mouse_loc = Input.mousePosition;
+        screen_mouse_loc.z = -1 * GameCamera.transform.position.z;
+        Vector3 mouse_loc = GameCamera.ScreenToWorldPoint(screen_mouse_loc);
+        Tile closest = Tile.TileClosestTo(mouse_loc);
+        if (closest.type == Terrain.Border) {
+            Tile_Outline.SetActive(false);
+        }
+        else {
+            Tile_Outline.SetActive(true);
+            Tile_Outline.transform.position = closest.obj.transform.position;
+        }
+
+
         // check if spacebar has been clicked
         // this pauses the game
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -208,7 +226,9 @@ public class Object_Manager : MonoBehaviour {
             return;
         }
         clock += 1;
+        // UI updates
         if (clock % 30 == 0) {
+            // update display
             Count_Display.text = string.Format("Counts: grasses {0} | trees {1} | bunnies {2} | foxes {3}",
                 Plant.num_grasses, Plant.num_trees, Animal.num_bunnies, Animal.num_foxes);
         }
