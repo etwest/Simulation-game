@@ -4,22 +4,31 @@
    a grass is 1 point and a tree is 10?                                                         -- Somewhat done, needs evaluation
 
 2.  Add trees                                                                                   -- done
+    
     Change the grass sprite                                                                     -- POSTPONED
+    
     Trees and grass have a somewhat competetive relationship                                    -- done
+    
     New trees can cause grass to die                                                            -- done
+    
     Differentiate between tree saplings and full grown trees then grass reproducing has a       -- POSTPONED
         chance to kill tree saplings       
     
 ## Version 0.1
 
-3.  Create some way of visually indicating moisture values. Like for dirt we                    -- NOT DONE
-        could color it darker or something and for rock we could... not sure.                                                                         
+3.  Create some way of visually indicating moisture values. Like for dirt we                    
+        could color it darker or something and for rock we could... not sure.                   -- NOT DONE                                                      
 
 4.  Add a title screen / main menu with resolution options                                      -- done
+    
     Add a pause button (space_bar)                                                              -- done
+    
     Add counts of the number of grasses, trees and animals which can be optionally displayed    -- done
+    
     Add a minimal user interface for accessing the menu and dispaying counts                    -- done
+    
     Add animals: bunnies and foxes                                                              -- 
+    
     Animals will need:
         - Health                                                                                --
         - Weather preference (heat/moisture)                                                    --
@@ -55,12 +64,14 @@
 
 ## Version 0.3
 6.  Add more animals: deer, wolves, bears.                                                      --
+    
     Add desert plants/animals such as cactus and camel                                          --
 
 7. Add berries and such for the bears to eat in addition to meat                                --
 
 ## Version 0.4
 8. Add a playable character                                                                     --
+   
    Features:
      - Health and hunger like animals                                                           --
      - To start acts like any other omnivore (bears)                                            --
@@ -72,12 +83,14 @@
 
 ## Version 0.5
 9. Begin initial testing
+    
     Feedback:
         -
     Changes to be made
         -
 
 10. Begin adding human AIs                                                                      --
+   
    Features:
      - Can interact with environment in the same way as Playable character                      --
      - Also add a trading/interaction system between character and AIs or                       --
