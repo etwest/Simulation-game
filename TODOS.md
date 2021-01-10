@@ -1,4 +1,5 @@
-TODOS from meeting:
+# TODOs
+## Version 0
 1. Create a per tile maximum for plant life... maybe a plant points system? like
    a grass is 1 point and a tree is 10?                                                         -- Somewhat done, needs evaluation
 
@@ -9,7 +10,7 @@ TODOS from meeting:
     Differentiate between tree saplings and full grown trees then grass reproducing has a       -- POSTPONED
         chance to kill tree saplings       
     
----- Version 0.1 ----
+## Version 0.1
 
 3.  Create some way of visually indicating moisture values. Like for dirt we                    -- NOT DONE
         could color it darker or something and for rock we could... not sure.                                                                         
@@ -40,7 +41,7 @@ TODOS from meeting:
         - Add collision components to every tree                                                --
         - Change the Plant format to be OOP like the animal format                              --
 
----- Version 0.2 ----
+## Version 0.2
 
 5.  Update Terrain                                                                              --
         - shallow water
@@ -51,14 +52,14 @@ TODOS from meeting:
         - Flat Dirt versus hills versus coast                                                   --
         - Find a way to encourage rare larger groups of water                                   --
             as opposed to many scattered groups
----- Version 0.3 ----
 
+## Version 0.3
 6.  Add more animals: deer, wolves, bears.                                                      --
     Add desert plants/animals such as cactus and camel                                          --
 
 7. Add berries and such for the bears to eat in addition to meat                                --
----- Version 0.4 ----
 
+## Version 0.4
 8. Add a playable character                                                                     --
    Features:
      - Health and hunger like animals                                                           --
@@ -68,8 +69,8 @@ TODOS from meeting:
 
     8b. Add wheat as a different type of plant which is somewhat suseptable to                  --
        takeover by grass if not in a large group? Can be a source of food                       --
----- Version 0.5 ----
 
+## Version 0.5
 9. Begin initial testing
     Feedback:
         -
@@ -82,10 +83,9 @@ TODOS from meeting:
      - Also add a trading/interaction system between character and AIs or                       --
        between the AIs without the interaction of the player
        - Will need to give the AI a sense of what is valuable                                   --
----- Version 0.6 ----
 
+## Version 0.6
 11. Upgrade graphics (Ideally have someone with talent help)                                    --
----- Version 0.7 ----
 
+## Version 0.7
 12. Add in buildings and trading systems                                                        --
----- Version 0.8 ----
