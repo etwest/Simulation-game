@@ -30,37 +30,36 @@
     Add animals: bunnies and foxes                                                              -- 
     
     Animals will need:
-        - Health                                                                                --
-        - Weather preference (heat/moisture)                                                    --
-        - Rate of hunger and hydration drop                                                     --
-            - Have this be influenced by health and location                                    --
-        - Movement                                                                              --
-        - Death                                                                                 --
-        - Spawning (either reproduction or wandering into the area)                             --
-        - Goal choosing and path finding                                                        --
-        - Collision rules (and collision components)                                            --
-        - Detect threats (bunnies run from foxes etc)                                           --
-        - Sprites                                                                               --
+        -Health                                                                                --
+        -Weather preference (heat/moisture)                                                    --
+        -Rate of hunger and hydration drop                                                     --
+            -Have this be influenced by health and location                                    --
+        -Movement                                                                              --
+        -Death                                                                                 --
+        -Spawning (either reproduction or wandering into the area)                             --
+        -Goal choosing and path finding                                                        --
+        -Collision rules (and collision components)                                            --
+        -Detect threats (bunnies run from foxes etc)                                           --
+        -Sprites                                                                               --
 
     Improve Initialization
-        - Run the simulation for 1000 or so cycles                                              --
+        -Run the simulation for 1000 or so cycles                                              --
 
     Small Stuff
-        - Check the recycle queues and remove objects which have been there for too long        --
-        - Add collision components to every tree                                                --
-        - Change the Plant format to be OOP like the animal format                              --
+        -Check the recycle queues and remove objects which have been there for too long        --
+        -Add collision components to every tree                                                --
+        -Change the Plant format to be OOP like the animal format                              --
 
 ## Version 0.2
 
 5.  Update Terrain                                                                              --
-        - shallow water
-            - Rivers? as unique tile types. Rock w/ river, dirt w/ river, etc.
-        - Exposed rock v Mountains.                                                             --
-            Maybe exposed rock comes in as low moisture but near water
+        -shallow water
+            -Rivers? as unique tile types. Rock w/ river, dirt w/ river, etc.
+        -Exposed rock v Mountains.                                                             --
+            -Maybe exposed rock comes in as low moisture but near water
             while desert is only if we are further away from water.
-        - Flat Dirt versus hills versus coast                                                   --
-        - Find a way to encourage rare larger groups of water                                   --
-            as opposed to many scattered groups
+        -Flat Dirt versus hills versus coast                                                   --
+        -Find a way to encourage rare larger groups of water as opposed to many scattered groups --
 
 ## Version 0.3
 6.  Add more animals: deer, wolves, bears.                                                      --
@@ -73,10 +72,10 @@
 8. Add a playable character                                                                     --
    
    Features:
-     - Health and hunger like animals                                                           --
-     - To start acts like any other omnivore (bears)                                            --
-     - Maybe add some simple tool making (spears, baskets)                                      --
-     - Maybe consider simple farming as well                                                    --
+     -Health and hunger like animals                                                           --
+     -To start acts like any other omnivore (bears)                                            --
+     -Maybe add some simple tool making (spears, baskets)                                      --
+     -Maybe consider simple farming as well                                                    --
 
     8b. Add wheat as a different type of plant which is somewhat suseptable to                  --
        takeover by grass if not in a large group? Can be a source of food                       --
@@ -92,10 +91,10 @@
 10. Begin adding human AIs                                                                      --
    
    Features:
-     - Can interact with environment in the same way as Playable character                      --
-     - Also add a trading/interaction system between character and AIs or                       --
+     -Can interact with environment in the same way as Playable character                      --
+     -Also add a trading/interaction system between character and AIs or                       --
        between the AIs without the interaction of the player
-       - Will need to give the AI a sense of what is valuable                                   --
+       -Will need to give the AI a sense of what is valuable                                   --
 
 ## Version 0.6
 11. Upgrade graphics (Ideally have someone with talent help)                                    --
