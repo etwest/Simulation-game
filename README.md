@@ -1,7 +1,7 @@
 # A Simulation in Unity
 This project is currently very much in progress.
 
-The goal is to develop a fully working simulation with plants and animals within Unity with the possibility of adding a controllable human character and turning the project into a survival game with systemic mechanics. Check `TODO.txt` for more information.
+The goal is to develop a fully working simulation with plants and animals within Unity with the possibility of adding a controllable human character and turning the project into a survival game with systemic mechanics. Check `TODOS.md` for more information.
 
 ## Running
 This codebase contains all the assets to create a Unity project. After downloading and installing Unity, the project can be imported and opened.
