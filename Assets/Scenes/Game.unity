@@ -738,7 +738,7 @@ MonoBehaviour:
   Count_Display: {fileID: 1851530341}
   grass: {fileID: 21300000, guid: 4f7db5616f4ab4f949781aa9e2b6583f, type: 3}
   tree: {fileID: 21300000, guid: ee016b30b51014f45a28600fea6a71fe, type: 3}
-  bunny: {fileID: 21300000, guid: ebefb1c7ced9f410285171bdd120dff4, type: 3}
+  bunny: {fileID: 21300000, guid: 2e3223375b39c4a429d50584e513eefc, type: 3}
   Tile_Outline: {fileID: 1431070847}
   GameCamera: {fileID: 519420031}
   initial_grass: 200

@@ -192,10 +192,12 @@ public class Object_Manager : MonoBehaviour {
         _x += _position.x;
         _y += _position.y;
         Vector3 _new_position = new Vector3(_x, _y, 0);
-        GameObject new_bunny = new GameObject();
-        new_bunny.transform.position = _new_position;
+        for(int bunny_count = 0; bunny_count < 5; bunny_count++) {
+            GameObject new_bunny = new GameObject();
+            new_bunny.transform.position = _new_position;
 
-        animals.Add(new Bunny(new_bunny, _tile));
+            animals.Add(new Bunny(new_bunny, _tile));
+        }
 
         animals_copy = animals;
     }

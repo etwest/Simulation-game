@@ -87,9 +87,9 @@ public class Animal {
         move_towards_target();
 
         // check if the animal is dead
-        if (cur_health <= 0) {
-            remove_Animal();
-        }
+        // if (cur_health <= 0) {
+        //     remove_Animal();
+        // }
 
         tick += 1;
     }
