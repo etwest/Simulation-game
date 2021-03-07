@@ -48,6 +48,13 @@ public class Plant {
     public static int baseDieTree;
     public static int grass_cost;
     public static int tree_cost;
+    public static Vector2[] tree_collider_points =
+        new Vector2[7] {
+            new Vector2(-0.01f, -0.03f), new Vector2(-0.03f, -0.01f),
+            new Vector2(-0.03f, 0.01f), new Vector2(-0.01f, 0.03f),
+            new Vector2(0.01f, 0.03f), new Vector2(0.03f, 0.01f),
+            new Vector2(0.03f, -0.01f)
+        };
 
     // the size of the plants
     public static float grass_size = .01f;
@@ -77,6 +84,9 @@ public class Plant {
                 ticksToDie = baseDieTree;
                 size = tree_size;
                 tile.cur_plant += tree_cost;
+                // add collider
+                PolygonCollider2D collider = obj.AddComponent<PolygonCollider2D>();
+                collider.SetPath(0, tree_collider_points);
                 break;
         }
 
