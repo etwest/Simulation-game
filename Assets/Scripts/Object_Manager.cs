@@ -183,16 +183,17 @@ public class Object_Manager : MonoBehaviour {
             }
         }
 
-        // create animals
-        Tile _tile = dirt_tiles[rand.Next() % dirt_tiles.Length];
-        Vector3 _position = _tile.obj.transform.position;
-        float _x = (float)(rand.NextDouble() * 0.25);
-        float _y = (float)(rand.NextDouble() * 0.25);
-
-        _x += _position.x;
-        _y += _position.y;
-        Vector3 _new_position = new Vector3(_x, _y, 0);
         for(int bunny_count = 0; bunny_count < 5; bunny_count++) {
+            // create animals
+            Tile _tile = dirt_tiles[rand.Next() % dirt_tiles.Length];
+            Vector3 _position = _tile.obj.transform.position;
+            float _x = (float)(rand.NextDouble() * 0.25);
+            float _y = (float)(rand.NextDouble() * 0.25);
+
+            _x += _position.x;
+            _y += _position.y;
+            Vector3 _new_position = new Vector3(_x, _y, 0);
+            
             GameObject new_bunny = new GameObject();
             new_bunny.transform.position = _new_position;
 
