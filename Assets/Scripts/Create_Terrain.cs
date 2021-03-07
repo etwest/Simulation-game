@@ -10,6 +10,7 @@ public enum Terrain {
     Desert,
     Dirt,
     Rock,
+    Snow,
     Border
 }
 
@@ -29,6 +30,7 @@ public class Create_Terrain : MonoBehaviour {
     public Sprite Dirt_Tile1;
     public Sprite Rock_Tile1;
     public Sprite Water_Tile1;
+    public Sprite Snow_Tile;
 
     public int seed;
 
@@ -71,6 +73,7 @@ public class Create_Terrain : MonoBehaviour {
     public Tile[] rock_tiles;
     public Tile[] desert_tiles;
     public Tile[] water_tiles;
+    public Tile[] snow_tiles;
 
     readonly float pixel = .01f;
 
@@ -84,6 +87,7 @@ public class Create_Terrain : MonoBehaviour {
         List<Tile> rock_list   = new List<Tile>();
         List<Tile> desert_list = new List<Tile>();
         List<Tile> water_list  = new List<Tile>();
+        List<Tile> snow_list   = new List<Tile>();
 
         // ensure that the world width and height are at least 6 and 4
         height = (height < 8) ? 8 : height;
@@ -182,7 +186,7 @@ public class Create_Terrain : MonoBehaviour {
         // TODO: scale value be based on width/height?
         float scale = .04f; // this scale determines how spread out the terrain is
         Noise.Seed = seed;
-        float[,] terrain_map = Noise.Calc2D(width, height, scale);
+        float[,] elevation_map = Noise.Calc2D(width, height, scale);
         Noise.Seed = seed - 10;
         float[,] weather_map = Noise.Calc2D(width, height, scale);
 
@@ -219,49 +223,47 @@ public class Create_Terrain : MonoBehaviour {
                         cur_tile.near_border = true;
 
                     // what are the noise values for this hex
-                    float terrain_noise = terrain_map[col, row];
-                    float weather_noise = weather_map[col, row];
-                    cur_tile.weather = (int) weather_noise;
-                    for (int i = 0; i < num_types; i++) {
-                        // num types - 1 because we don't want to
-                        // here we are checking if the terrain noise
-                        // is less than the associated i value and if
-                        // so assign the appropriate sprite
-                        if (terrain_noise < (i + 1) * 256 / (num_types - 1)) {
-                            switch ((Terrain)i) {
-                                case Terrain.Desert:
-                                case Terrain.Dirt:
-                                    if (weather_noise > 256 * .25) {
-                                        // dirt tile
-                                        dirt_list.Add(cur_tile);
-                                        sr.sprite = Dirt_Tile1;
-                                        cur_tile.type = Terrain.Dirt;
-                                        cur_tile.plant_points = (int) (25 * weather_noise / 200);
-                                    }
-                                    else {
-                                        // desert tile
-                                        desert_list.Add(cur_tile);
-                                        sr.sprite = Desert_Tile1;
-                                        cur_tile.type = Terrain.Desert;
-                                        cur_tile.plant_points = (int) (4 * weather_noise / (256 * .25));
-                                    }
-                                    break;
-                                case Terrain.Water:
-                                    water_list.Add(cur_tile);
-                                    sr.sprite = Water_Tile1;
-                                    cur_tile.type = Terrain.Water;
-                                    break;
-                                case Terrain.Rock:
-                                    rock_list.Add(cur_tile);
-                                    sr.sprite = Rock_Tile1;
-                                    cur_tile.type = Terrain.Rock;
-                                    cur_tile.plant_points = (int) (10 * weather_noise / 256);
-                                    break;
-                                default:
-                                    Debug.Log("Failed to assign a terrain!!");
-                                    break;
-                            }
-                            break;
+                    float elevation = elevation_map[col, row];
+                    float weather_value = weather_map[col, row];
+                    cur_tile.weather = (int) weather_value;
+
+                    int sea_level = 64;
+                    int dirt_level = 192;
+                    int snow_level = 224;
+
+                    if( elevation <= sea_level){
+                        water_list.Add(cur_tile);
+                        sr.sprite = Water_Tile1;
+                        cur_tile.type = Terrain.Water;
+                    } 
+                    else if (elevation <= dirt_level){
+                        if (weather_value > 256 * .25) {
+                            // dirt tile
+                            dirt_list.Add(cur_tile);
+                            sr.sprite = Dirt_Tile1;
+                            cur_tile.type = Terrain.Dirt;
+                            cur_tile.plant_points = (int) (25 * weather_value / 200);
+                        } 
+                        else {
+                            // desert tile
+                            desert_list.Add(cur_tile);
+                            sr.sprite = Desert_Tile1;
+                            cur_tile.type = Terrain.Desert;
+                            cur_tile.plant_points = (int) (4 * weather_value / (256 * .25));
+                        }
+                    }
+                    else{
+                        if (weather_value > 256 * .25 && elevation > snow_level) {
+                            snow_list.Add(cur_tile);
+                            sr.sprite = Snow_Tile;
+                            cur_tile.type = Terrain.Snow;
+                            cur_tile.plant_points = (int) (5 * weather_value / 256);                            
+                        }
+                        else{
+                            rock_list.Add(cur_tile);
+                            sr.sprite = Rock_Tile1;
+                            cur_tile.type = Terrain.Rock;
+                            cur_tile.plant_points = (int) (10 * weather_value / 256);
                         }
                     }
                 }
@@ -310,5 +312,6 @@ public class Create_Terrain : MonoBehaviour {
         desert_tiles = desert_list.ToArray();
         rock_tiles   = rock_list.ToArray();
         water_tiles  = water_list.ToArray();
+        snow_tiles   = snow_list.ToArray();
     }
 }
