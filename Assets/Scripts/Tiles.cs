@@ -33,36 +33,7 @@ public class Tile {
     private static float pixel = .01f;
 
     // this function, given a game object returns the tile which is
-    // closest to that game object out of this tile and it's neighbors
     public Tile TileClosestTo(GameObject item) {
-        //Vector3 item_pos = item.transform.position;
-        //Vector3 my_pos = obj.transform.position;
-        //// our distance to the item
-        //float dist = Object_Manager.CalcDistance(obj, item);
-
-        //float dist1;
-        //float dist2;
-        //Tile option1;
-        //Tile option2;
-
-        //// which tiles should we check
-        //if (item_pos.y > my_pos.y) {
-        //    option1 = N;
-        //    if (item_pos.x > my_pos.x) option2 = NE;
-        //    else option2 = NW;
-        //}
-        //else {
-        //    option1 = S;
-        //    if (item_pos.x > my_pos.x) option2 = SE;
-        //    else option2 = SW;
-        //}
-        //dist1 = Object_Manager.CalcDistance(option1.obj, item);
-        //dist2 = Object_Manager.CalcDistance(option2.obj, item);
-
-        //if (dist < dist1 && dist < dist2) return this;
-        //else if (dist1 < dist2) return option1;
-        //else return option2;
-
         return TileClosestTo(item.transform.position);
     }
 
@@ -138,9 +109,8 @@ public class Tile {
         return tiles_array[y_row, x_col];
     }
 
-    // returns the distance to the closest object which an object could collide
-    // with
-    // TODO Use collider objects instead
+    // Checks the collider components of nearby objects
+    // and returns if there was a collision
     public bool collision(GameObject from_obj) {
         PolygonCollider2D collider = from_obj.GetComponent<PolygonCollider2D>();
         // loop through the lists we have of what's on our tile

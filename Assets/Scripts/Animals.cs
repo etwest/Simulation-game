@@ -45,8 +45,13 @@ public class Animal {
     protected static System.Random rand = new System.Random();
 
     protected uint tick = 0;
+    private Rigidbody2D body_physics;
 
-    public Animal(float _health) {
+    public Animal(float _health, GameObject _obj) {
+        obj = _obj;
+        body_physics = obj.AddComponent<Rigidbody2D>();
+        body_physics.gravityScale = 0;
+
         health_max = _health;
         food_max = _health / 2;
         hydro_max = _health / 2;
@@ -76,7 +81,7 @@ public class Animal {
     // also moving towards a target or selecting a random target
     protected void basic_update() {
         // every 10 updates, check life conditions are and reevaluate target dir
-        if (tick % 10 == 0) {
+        if (tick % 20 == 0) {
             effects();
             if (target_set) set_target_path();
             else setup_rmove();
@@ -153,7 +158,7 @@ public class Animal {
         Tile start_tile = on_tile;
 
         // edit position
-        obj.transform.position = cur_pos + towards_target;
+        body_physics.MovePosition(cur_pos + towards_target);
 
         // this function checks if the animal has crossed from one tile to another
         // 1. One tile to another, create a tile function which handles this
@@ -172,13 +177,34 @@ public class Animal {
         // also checks if the animal has run into a border
         // if so it directs the animal to
         // TODO: Improve on this path finding
-        if (on_tile.collision(obj) || on_tile.type == Terrain.Border || on_tile.type == Terrain.Water) {
-            obj.transform.position = cur_pos; // undo the movement
+        if (on_tile.collision(obj)) {
+            body_physics.MovePosition(cur_pos); // undo the movement
             // current basic idea: just turn right, this code accomplishes that
             towards_target.x = towards_target.y;
             towards_target.y = towards_target.x * -1;
             on_tile = start_tile;
-            move_towards_target(); // do the modified movement
+
+            
+        }
+        if (on_tile.type == Terrain.Water || on_tile.type == Terrain.Border) {
+            // find tile closest to us which is not of type water/border
+            // then go there
+            float min_dist = 10000f;
+            Tile closest = null;
+            foreach(Tile tile in on_tile.i_and_adj) {
+                if (tile != null && tile.type != Terrain.Water && tile.type != Terrain.Border) {
+                    float dist = Object_Manager.CalcDistance(tile.obj, obj);
+                    if (dist < min_dist) {
+                        min_dist = dist;
+                        closest = tile;
+                    }
+                }
+            }
+            if (closest != null) {
+                set_target(closest.obj);
+                return;
+            } 
+            Debug.Log("ERROR: Failed to navigate to land/non-border");
         }
     }
 
@@ -226,9 +252,9 @@ public class Animal {
             cur_health = (cur_health > health_max) ? health_max : cur_health;
         }
 
-        Debug.Log(string.Format("Done with effects on animal {0}, cur_food {1}, "
-            + "cur_hydro {2}, cur_health {3}", obj.name, cur_food, cur_hydro,
-            cur_health));
+        // Debug.Log(string.Format("Done with effects on animal {0}, cur_food {1}, "
+        //     + "cur_hydro {2}, cur_health {3}", obj.name, cur_food, cur_hydro,
+        //     cur_health));
     }
 
     public void take_damage(float hit_amt) {

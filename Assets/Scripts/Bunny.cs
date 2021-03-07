@@ -19,7 +19,7 @@ public class Bunny : Animal {
     public Plant plant_to_eat;
     public bool moving_to_tile = false;
 
-    public Bunny(GameObject _obj, Tile start_tile) : base(default_health) {
+    public Bunny(GameObject _obj, Tile start_tile) : base(default_health, _obj) {
         // set basic characteristics
         food_drop = food_max / ticks_without_food * 10;
         hydro_drop = 0f; //TODO
@@ -32,7 +32,6 @@ public class Bunny : Animal {
         climate_pref_min = 100;
 
         // setup gameobject and sprite
-        obj = _obj;
         obj.name = string.Format("Bunny_{0}", num_bunnies);
         SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
         sr.sprite = sprite;
