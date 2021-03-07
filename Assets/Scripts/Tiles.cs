@@ -66,6 +66,27 @@ public class Tile {
         return TileClosestTo(item.transform.position);
     }
 
+    public Tile one_further(int i) {
+        switch (i) {
+            case 1:
+                Debug.Log("Case 1");
+                return N;
+            case 2:
+                return NE;
+            case 3:
+                return NW;
+            case 4:
+                return S;
+            case 5:
+                return SE;
+            case 6:
+                return SW;
+            default:
+                Debug.Log("Default");
+                return this;
+        }
+    }
+
     public static Tile TileClosestTo(Vector3 position) {
         // get the bottom left corner. This is tiles_array[0,0]
         Vector3 start = tiles_array[0,0].obj.transform.position;

@@ -105,17 +105,39 @@ public class Bunny : Animal {
     }
 
     // return the best tile nearby
+    // TODO: Add best hex is one with less than two other bunnies
     public GameObject best_tile() {
         int max_point = -100000;
         GameObject ret = on_tile.obj;
-        foreach(Tile tile in on_tile.i_and_adj) {
+        // 7 because there are 7 objects in the array created by on_tile.i_and_adj
+        for(int i = 0; i < 7; i++) {
+            Tile tile = on_tile.i_and_adj[i];
             int points = tile.grass_list.Count * 10;
+            // Determine weather for tile one over.
             if (tile.weather > climate_pref_max) {
                 points -= tile.weather - climate_pref_max;
             }
             else if (tile.weather < climate_pref_min) {
                 points -= climate_pref_min - tile.weather;
             }
+            Debug.Log("Points: " + i);
+
+            // Determine points for tile two over.
+            Tile further_tile = tile.one_further(i);
+            int further_points = further_tile.grass_list.Count * 10;
+            if (further_tile.weather > climate_pref_max) {
+                further_points -= tile.weather - climate_pref_max;
+            }
+            else if (further_tile.weather < climate_pref_min) {
+                further_points -= climate_pref_min - tile.weather;
+            }
+            Debug.Log("Further points: " + further_points);
+
+            // Use points from further tile if more
+            if (further_points > points) {
+                points = further_points;
+            }
+            Debug.Log("Final points: " + points);
 
             if (points > max_point) {
                 max_point = points;
